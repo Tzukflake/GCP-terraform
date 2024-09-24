@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("C:/Users/Andreizh/Downloads/git-gcp-terraform-8ca39467befd.json") 
+  credentials = file("C:/Users/Andreizh/Downloads/git-gcp-terraform-8ca39467befd.json")
   project     = "git-gcp-terraform"
   region      = "europe-north1"
 }
