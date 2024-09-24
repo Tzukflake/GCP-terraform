@@ -1,7 +1,7 @@
 provider "google" {
-  credentials = file("C:/Users/Andreizh/Downloads/git-gcp-terraform-8ca39467befd.json")  # Use forward slashes in the file path
+  credentials = file("C:/Users/Andreizh/Downloads/git-gcp-terraform-8ca39467befd.json") 
   project     = "git-gcp-terraform"
-  region      = "europe-north1"  # Use region only (without the zone suffix '-a')
+  region      = "europe-north1"
 }
 
 resource "google_storage_bucket" "my-bucket" {
