@@ -1,13 +1,25 @@
 provider "google" {
-  credentials = file("C:/Users/Andreizh/Downloads/git-gcp-terraform-8ca39467befd.json")
-  project     = "git-gcp-terraform"
-  region      = "europe-north1"
+  credentials = file(var.credentials_file)  
+  project     = var.project_id              
+  region      = var.region                  
 }
 
 resource "google_storage_bucket" "my-bucket" {
   name          = "tt-bucket"
   location      = "EU"
   force_destroy = true
-
   public_access_prevention = "enforced"
+}
+
+
+variable "credentials_file" {
+  description = "Path to the GCP credentials file"
+}
+
+variable "project_id" {
+  description = "GCP project ID"
+}
+
+variable "region" {
+  description = "GCP region"
 }
