@@ -1,13 +1,13 @@
 provider "google" {
-  credentials = file(var.credentials_file)  
-  project     = var.project_id              
-  region      = var.region                  
+  credentials = file(var.credentials_file)
+  project     = var.project_id
+  region      = var.region
 }
 
 resource "google_storage_bucket" "my-bucket" {
-  name          = "tt-bucket"
-  location      = "EU"
-  force_destroy = true
+  name                     = "tt-bucket"
+  location                 = "EU"
+  force_destroy            = true
   public_access_prevention = "enforced"
 }
 
