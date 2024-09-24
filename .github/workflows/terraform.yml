@@ -17,6 +17,9 @@ jobs:
       run:
         shell: bash
 
+    env:  # Set the environment variable for all steps
+      GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp_key.json
+
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -30,31 +33,19 @@ jobs:
     - name: Set GCP Credentials
       run: echo "${{ secrets.GCP_CREDENTIALS }}" > $HOME/gcp_key.json
 
-    # Export Google credentials as an environment variable
-    - name: Export Google Credentials
-      run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp_key.json
-
     # Initialize Terraform
     - name: Terraform Init
       run: terraform init
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp_key.json
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp_key.json
 
     # Generate the Terraform plan
     - name: Terraform Plan
       run: terraform plan -input=false -var="credentials_file=$HOME/gcp_key.json" -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="region=europe-north1"
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp_key.json
 
     # Apply the Terraform plan (only on push to main)
     - name: Terraform Apply
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve -input=false -var="credentials_file=$HOME/gcp_key.json" -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="region=europe-north1"
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcp_key.json
